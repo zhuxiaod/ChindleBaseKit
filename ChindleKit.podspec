@@ -22,9 +22,9 @@ Pod::Spec.new do |s|
   
   s.ios.deployment_target = '12.0'
   
-  s.swift_versions = '5.0' 
+  s.swift_versions = '5.0'
   
-  s.source_files = 'ChindleKit/ChindleBaseKit.h'
+  s.source_files = 'ChindleKit/**/*'
   #  s.source_files = 'ChindleKit/Classes/**/*.{h,m,swift}'
   
   s.static_framework = true
