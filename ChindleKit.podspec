@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'ChindleKit'
-  s.version          = '0.1.4'
+  s.version          = '1'
   s.summary          = 'A short description of ChindleKit.'
   
   s.description      = <<-DESC
@@ -24,8 +24,8 @@ Pod::Spec.new do |s|
   
   s.swift_versions = '5.0'
   
-  s.source_files = 'ChindleKit/**/*'
-  #  s.source_files = 'ChindleKit/Classes/**/*.{h,m,swift}'
+  # s.source_files = 'ChindleKit/**/*'
+  s.source_files = 'ChindleKit/Classes/**/**/*.{h,m,swift}'
   
   s.static_framework = true
   
