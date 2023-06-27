@@ -7,35 +7,49 @@
 #
 
 Pod::Spec.new do |s|
-  s.name             = 'ChindleBaseKit'
-  s.version          = '0.1.2'
-  s.summary          = 'A short description of ChindleBaseKit.'
+  s.name             = 'ChindleKit'
+  s.version          = '0.1.4'
+  s.summary          = 'A short description of ChindleKit.'
   
   s.description      = <<-DESC
-Contains the decomponents for Design System.
-                       DESC
-
+  Contains the decomponents for Design System.
+  DESC
+  
   s.homepage         = 'https://github.com/zhuxiaod/ChindleBaseKit'
   s.license          = { :type => 'MIT', :file => 'LICENSE' }
   s.author           = { 'zhuxiaod' => 'zhuxiaod_183202114@qq.com' }
   s.source           = { :git => 'https://github.com/zhuxiaod/ChindleBaseKit.git', :tag => s.version.to_s }
-
-  s.ios.deployment_target = '11.0'
-  s.swift_versions = '5.0'
-
-  s.source_files = 'ChindleBaseKit/Classes/**/*'
   
-  s.frameworks = 'UIKit'
+  s.ios.deployment_target = '12.0'
+  
+  s.swift_versions = '5.0'
+  
+  s.source_files = 'ChindleKit/**/*'
+  #  s.source_files = 'ChindleKit/Classes/**/*.{h,m,swift}'
+  
+  s.static_framework = true
+  
+  s.frameworks = ['UIKit', 'Photos']
+  
   s.dependency 'MJRefresh'
   s.dependency 'LYEmptyView'
   s.dependency 'YYKit'
   s.dependency 'SVProgressHUD'
   s.dependency 'Then'
-
+  s.dependency 'Toast'
+  s.dependency 'SnapKit'
   
   s.requires_arc = true
-
-  s.pod_target_xcconfig = { 'SWIFT_VERSION' => '4.0' }
-
+  
+  s.pod_target_xcconfig = {
+    'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'arm64',
+    'DEFINES_MODULE' => 'YES',
+    'VALID_ARCHS' => 'x86_64 armv7 arm64'
+  }
+  
+  s.user_target_xcconfig = {
+    'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'arm64'
+  }
+  
 end
 
