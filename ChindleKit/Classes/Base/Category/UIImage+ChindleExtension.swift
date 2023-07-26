@@ -38,6 +38,15 @@ extension UIImage {
         return jpegData(compressionQuality: quality)
     }
     
+    //获取项目内图片
+    public convenience init?(bundleName: String) {
+        guard let bundlePath = Bundle.main.path(forResource: bundleName, ofType: "png") else {
+            return nil
+        }
+        
+        self.init(contentsOfFile: bundlePath)
+    }
+    
 }
 
 extension UIImage {

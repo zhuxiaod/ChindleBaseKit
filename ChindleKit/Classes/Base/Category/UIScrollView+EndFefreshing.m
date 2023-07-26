@@ -14,13 +14,24 @@
 @implementation UIScrollView (EndFefreshing)
 
 -(void)tes_hideRefreshingFooterWithTotalCount:(NSInteger)totalCount arrayCount:(NSInteger)arrayCount{
+    
+    [self.mj_footer endRefreshing];
+    
+    [self.mj_header endRefreshing];
+    
     self.mj_footer.hidden = NO;
+    
     if(totalCount <= arrayCount) {
         self.mj_footer.hidden = YES;
     }
 }
 
 -(void)tes_showEndRefreshingFooterWithTotalCount:(NSInteger)totalCount arrayCount:(NSInteger)arrayCount{
+    
+    [self.mj_footer endRefreshing];
+    
+    [self.mj_header endRefreshing];
+
     self.mj_footer.hidden = NO;
     if(totalCount <= arrayCount) {
         [self.mj_footer endRefreshingWithNoMoreData];

@@ -79,3 +79,12 @@ extension String {
         return NSRange(location: location, length: length)
     }
 }
+
+extension String {
+    public func size(withFont font: UIFont) -> CGSize {
+        let attributes = [NSAttributedString.Key.font: font]
+        return (self as NSString).size(withAttributes: attributes)
+    }
+}
+
+
