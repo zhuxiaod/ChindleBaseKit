@@ -15,23 +15,26 @@ public class ChindlePhotoLibrary {
     }
     
     //拍照
-    public func photograpUI(vc: UIViewController){
+    @discardableResult
+    public func photograpUI(vc: UIViewController) -> UIImagePickerController?{
         
         if UIImagePickerController.isSourceTypeAvailable(.camera){
             
             let cameraPicker = UIImagePickerController()
             cameraPicker.delegate = vc as? any UIImagePickerControllerDelegate & UINavigationControllerDelegate
             
-            cameraPicker.allowsEditing = true
             cameraPicker.sourceType = .camera
             //在需要的地方present出来
             UIView.getCurrentVC()?.present(cameraPicker, animated: true, completion: nil)
             
+            return cameraPicker
+
         } else {
             
             UIView.show(message: "不支持拍照")
-            
         }
+        
+        return nil
     }
     
     //从相册选择

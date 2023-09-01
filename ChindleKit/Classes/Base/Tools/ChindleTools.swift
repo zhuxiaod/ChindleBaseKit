@@ -151,6 +151,7 @@ public class ChindleTools {
         return attributedString
     }
     
+    //价格
     public static func formatMoneyStr(currency: String, amount: String, currencyFontSize: CGFloat, amountFontSize: CGFloat, currencyColor: UIColor, amountColor: UIColor) -> NSAttributedString {
         let attributedString = NSMutableAttributedString()
         
@@ -257,8 +258,6 @@ public class ChindleTools {
                 attributedString.addAttribute(.font, value: attribute.font, range: range)
             }
         }
-
-       
 
         return attributedString
     }
