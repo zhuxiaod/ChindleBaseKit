@@ -27,7 +27,7 @@ extension UIStackView {
     }
     
     /// 添加管理视图
-    private func addArrangedSubviews(_ views: [UIView]) {
+    public func addArrangedSubviews(_ views: [UIView]) {
         for view in views {
             addArrangedSubview(view)
         }
