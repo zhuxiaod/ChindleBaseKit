@@ -85,6 +85,15 @@ extension String {
         let attributes = [NSAttributedString.Key.font: font]
         return (self as NSString).size(withAttributes: attributes)
     }
+    
+    //计算文字高度
+    public func heightForString(withFont font: UIFont, maxWidth: CGFloat) -> CGFloat {
+        let size = CGSize(width: maxWidth, height: .greatestFiniteMagnitude)
+        let options: NSStringDrawingOptions = [.usesLineFragmentOrigin, .usesFontLeading]
+        let attributes = [NSAttributedString.Key.font: font]
+        
+        let boundingRect = self.boundingRect(with: size, options: options, attributes: attributes, context: nil)
+        
+        return ceil(boundingRect.height)
+    }
 }
-
-
