@@ -67,3 +67,15 @@ extension UIImage {
         return scaledImage.withRenderingMode(renderingMode)
     }
 }
+
+extension UIImage {
+    
+    public func resized(to newSize: CGSize) -> UIImage? {
+        UIGraphicsBeginImageContextWithOptions(newSize, false, UIScreen.main.scale)
+        defer { UIGraphicsEndImageContext() }
+        
+        draw(in: CGRect(origin: .zero, size: newSize))
+        
+        return UIGraphicsGetImageFromCurrentImageContext()
+    }
+}

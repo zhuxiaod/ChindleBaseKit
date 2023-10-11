@@ -26,6 +26,7 @@ extension NSAttributedString {
 extension NSAttributedString {
     
     public func calculateHeight(withConstrainedWidth width: CGFloat, lineSpacing: CGFloat? = nil) -> CGFloat {
+        
         let size = CGSize(width: width, height: CGFloat.greatestFiniteMagnitude)
         
         let options: NSStringDrawingOptions = [.usesLineFragmentOrigin, .usesFontLeading]
