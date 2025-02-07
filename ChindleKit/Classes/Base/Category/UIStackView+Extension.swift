@@ -44,9 +44,11 @@ extension UIStackView {
     
     /// 移除管理视图
     public func qd_removeArrangedSubviews() {
+        
         for view in arrangedSubviews {
             removeArrangedSubview(view)
         }
+        
     }
     
     /// 生成一个指定间隔的填充区域

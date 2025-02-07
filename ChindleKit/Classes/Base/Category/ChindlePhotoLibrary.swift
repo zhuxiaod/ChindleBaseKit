@@ -16,13 +16,13 @@ public class ChindlePhotoLibrary {
     
     //拍照
     @discardableResult
-    public func photograpUI(vc: UIViewController) -> UIImagePickerController?{
+    public func photograpUI(vc: UIViewController, allowsEditing: Bool = false) -> UIImagePickerController?{
         
         if UIImagePickerController.isSourceTypeAvailable(.camera){
             
             let cameraPicker = UIImagePickerController()
             cameraPicker.delegate = vc as? any UIImagePickerControllerDelegate & UINavigationControllerDelegate
-            
+            cameraPicker.allowsEditing = allowsEditing
             cameraPicker.sourceType = .camera
             //在需要的地方present出来
             UIView.getCurrentVC()?.present(cameraPicker, animated: true, completion: nil)
@@ -38,16 +38,17 @@ public class ChindlePhotoLibrary {
     }
     
     //从相册选择
-    public func albumUI(vc: UIViewController){
+    public func albumUI(vc: UIViewController, allowsEditing: Bool = true) {
         
         PHPhotoLibrary.requestAuthorization({(status:PHAuthorizationStatus) in
             switch status{
             case .authorized:
                 DispatchQueue.global(qos: .userInitiated).async {
                     DispatchQueue.main.async {
+                        
                         let photoPicker =  UIImagePickerController()
                         photoPicker.delegate = vc as? any UIImagePickerControllerDelegate & UINavigationControllerDelegate
-                        photoPicker.allowsEditing = true
+                        photoPicker.allowsEditing = allowsEditing
                         photoPicker.sourceType = .photoLibrary
                         //在需要的地方present出来
                         UIView.getCurrentVC()?.present(photoPicker, animated: true, completion: nil)

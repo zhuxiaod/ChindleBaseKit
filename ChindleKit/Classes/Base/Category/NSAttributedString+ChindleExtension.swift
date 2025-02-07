@@ -9,10 +9,12 @@ import Foundation
 
 extension NSAttributedString {
     
-    public func add(lineHeight: CGFloat) -> NSAttributedString {
+    public func add(lineHeight: CGFloat,alignment: NSTextAlignment = .left) -> NSAttributedString {
         
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.lineSpacing = lineHeight
+        
+        paragraphStyle.alignment = alignment
         
         let mutableAttriString = NSMutableAttributedString(attributedString: self)
         let range = NSRange(location: 0, length: self.length)
@@ -42,6 +44,33 @@ extension NSAttributedString {
 
         return ceil(boundingRect.height)
     }
+    
+    public func calculateAttributedTextHeight(text: String, width: CGFloat, font: UIFont, lineHeight: CGFloat) -> CGFloat {
+        // 创建段落样式并设置行高
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.lineSpacing = lineHeight
+//        paragraphStyle.maximumLineHeight = lineHeight
+        
+        // 创建富文本属性
+        let attributes: [NSAttributedString.Key: Any] = [
+            .font: font,
+            .paragraphStyle: paragraphStyle
+        ]
+        
+        // 创建富文本
+        let attributedText = NSAttributedString(string: text, attributes: attributes)
+        
+        // 计算富文本的边界矩形
+        let boundingRect = attributedText.boundingRect(
+            with: CGSize(width: width, height: CGFloat.greatestFiniteMagnitude),
+            options: [.usesLineFragmentOrigin, .usesFontLeading],
+            context: nil
+        )
+        
+        // 返回计算出的高度，四舍五入取整
+        return ceil(boundingRect.height)
+    }
+    
 }
 
 extension NSAttributedString {
@@ -89,6 +118,33 @@ extension NSAttributedString {
         }
         
         return mutableAttributedString.copy() as! NSAttributedString
+    }
+    
+    
+}
+
+extension NSAttributedString {
+    
+    //匹配字符串改变颜色和字体
+    public func applyColorAndFont(toText searchText: String, color: UIColor, font: UIFont) -> NSAttributedString {
+        let mutableAttributedString = NSMutableAttributedString(attributedString: self)
+        let string = self.string as NSString
+        let range = string.range(of: searchText)
+        
+        if range.location != NSNotFound {
+            mutableAttributedString.addAttribute(.foregroundColor, value: color, range: range)
+            mutableAttributedString.addAttribute(.font, value: font, range: range)
+        }
+        
+        return NSAttributedString(attributedString: mutableAttributedString)
+    }
+    
+    public static func attributedString(withText text: String, color: UIColor, font: UIFont) -> NSAttributedString {
+        let attributes: [NSAttributedString.Key: Any] = [
+            .foregroundColor: color,
+            .font: font
+        ]
+        return NSAttributedString(string: text, attributes: attributes)
     }
 }
 

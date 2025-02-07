@@ -15,7 +15,7 @@ typedef void(^SwitchOrientationBlock)(BOOL isLaunchScreen);
 
 @property(nonatomic,copy)SwitchOrientationBlock switchOrientationBlock;
 
-+(instancetype)shareManager;
+//+(instancetype)shareManager;
 
 -(void)p_switchOrientationWithLaunchScreen:(BOOL)isLaunchScreen viewController:(UIViewController *)viewController;
 

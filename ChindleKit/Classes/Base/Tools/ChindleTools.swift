@@ -295,10 +295,18 @@ public class ChindleTools {
 
 
 extension ChindleTools {
+    
     public static func compareTimestamps(timestamp1: TimeInterval, timestamp2: TimeInterval) -> ComparisonResult {
         let date1 = Date(timeIntervalSince1970: timestamp1)
         let date2 = Date(timeIntervalSince1970: timestamp2)
         
         return date1.compare(date2)
     }
+    
 }
+
+public func isDeviceiPad() -> Bool {
+    return UIDevice.current.userInterfaceIdiom == .pad
+}
+
+

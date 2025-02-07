@@ -23,9 +23,18 @@
     [self.webView evaluateJavaScript:@"window.loadComment()" completionHandler:nil];
  
  */
+
+typedef void(^ClickBackBlock)(void);
+
 @interface KKUIWebViewController : UIViewController<WKUIDelegate,WKNavigationDelegate,WKScriptMessageHandler>
 @property (nonatomic, strong) WKWebView *webview;
 @property (nonatomic, strong) NSURL *requestURL;
+
+@property (nonatomic, copy) ClickBackBlock clickBackBlock;
+
+@property (nonatomic, strong) WKWebViewConfiguration *externalConfiguration; // 外部传入的配置
+
+- (instancetype)initWithConfiguration:(WKWebViewConfiguration *)configuration;
 
 -(void)setProgressViewTintColor:(UIColor *)progressTintColor;
 

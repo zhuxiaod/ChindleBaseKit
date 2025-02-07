@@ -9,19 +9,19 @@
 
 @implementation SwitchOrientationManager
 
-static SwitchOrientationManager *manager = nil;
+//static SwitchOrientationManager *manager = nil;
 
-+(instancetype)shareManager{
-    
-    static dispatch_once_t onceToken;
-    
-    dispatch_once(&onceToken, ^{
-    
-        manager = [[SwitchOrientationManager alloc] init];
-    });
-    
-    return manager;
-}
+//+(instancetype)shareManager{
+//    
+//    static dispatch_once_t onceToken;
+//    
+//    dispatch_once(&onceToken, ^{
+//    
+//        manager = [[SwitchOrientationManager alloc] init];
+//    });
+//    
+//    return manager;
+//}
 
 /// 切换设备方向
 /// - Parameter isLaunchScreen: 是否是全屏
@@ -95,7 +95,7 @@ static SwitchOrientationManager *manager = nil;
     } else {
         // 这里是 UIDeviceOrientationLandscapeLeft（我们需要 Home 按键在右边）
         // UIDeviceOrientationLandscapeLeft,       // Device oriented horizontally, home button on the right
-        isLaunchScreen = [UIDevice currentDevice].orientation == UIDeviceOrientationLandscapeLeft;
+        isLaunchScreen = [UIDevice currentDevice].orientation == UIDeviceOrientationLandscapeRight;
     }
     
     masBlock(isLaunchScreen);

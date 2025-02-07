@@ -99,3 +99,39 @@ extension UIImage {
         return base64
     }
 }
+
+extension UIImage {
+    
+    // 根据给定的宽度计算等比例的高度
+    // 根据给定的宽度计算等比例的尺寸
+    public func resizedDimensions(forWidth targetWidth: CGFloat) -> CGSize {
+        // 获取图片的原始宽度和高度
+        let originalWidth = self.size.width
+        let originalHeight = self.size.height
+        
+        // 计算纵横比 (高 / 宽)
+        let aspectRatio = originalHeight / originalWidth
+        
+        // 根据目标宽度计算等比例的高度
+        let resizedHeight = targetWidth * aspectRatio
+        
+        // 返回新的尺寸
+        return CGSize(width: targetWidth, height: resizedHeight)
+    }
+    
+    // 根据给定的高度计算等比例的尺寸
+    public func resizedDimensions(forHeight targetHeight: CGFloat) -> CGSize {
+        // 获取图片的原始宽度和高度
+        let originalWidth = self.size.width
+        let originalHeight = self.size.height
+        
+        // 计算纵横比 (宽 / 高)
+        let aspectRatio = originalWidth / originalHeight
+        
+        // 根据目标高度计算等比例的宽度
+        let resizedWidth = targetHeight * aspectRatio
+        
+        // 返回新的尺寸
+        return CGSize(width: resizedWidth, height: targetHeight)
+    }
+}

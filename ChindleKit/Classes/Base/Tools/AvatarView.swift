@@ -34,9 +34,9 @@ open class AvatarView: UIView {
     }
     
     // 圆角半径
-    public var cornerRadius: CGFloat = 0 {
+    public var xd_cornerRadius: CGFloat = 0 {
         didSet {
-            layer.cornerRadius = cornerRadius
+            layer.cornerRadius = xd_cornerRadius
             layer.masksToBounds = true
         }
     }
@@ -83,4 +83,49 @@ open class AvatarView: UIView {
         }
     }
  
+}
+
+public class DottedSeparatorView: UIView {
+    
+    var segmentHeight: CGFloat = 1.0
+    var segmentWidth: CGFloat = 5.0
+    var segmentGap: CGFloat = 3.0
+    var strokeColor = UIColor.lightGray
+
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        self.backgroundColor = UIColor.white
+    }
+    
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+        self.backgroundColor = UIColor.white
+    }
+    
+    public override func draw(_ rect: CGRect) {
+        super.draw(rect)
+        
+        guard let context = UIGraphicsGetCurrentContext() else { return }
+        
+        context.setLineWidth(segmentHeight)
+        context.setStrokeColor(strokeColor.cgColor)
+        
+        let dashPattern: [CGFloat] = [segmentWidth, segmentGap]
+        
+        context.setLineDash(phase: 0, lengths: dashPattern)
+        
+        context.move(to: CGPoint(x: 0, y: rect.height / 2))
+        context.addLine(to: CGPoint(x: rect.width, y: rect.height / 2))
+        
+        context.strokePath()
+    }
+    
+    public func configure(segmentHeight: CGFloat, segmentWidth: CGFloat, segmentGap: CGFloat,strokeColor: UIColor) {
+        self.segmentHeight = segmentHeight
+        self.segmentWidth = segmentWidth
+        self.segmentGap = segmentGap
+        self.strokeColor = strokeColor
+
+        setNeedsDisplay()  // 重新绘制视图
+    }
 }
