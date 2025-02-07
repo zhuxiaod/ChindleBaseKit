@@ -18,6 +18,7 @@
 #import "UIButton+TESBlock.h"
 #import "SwitchOrientationManager.h"
 #import "KKUIWebViewController.h"
+#import "NSNumber+Extension.h"
 
 #endif
 

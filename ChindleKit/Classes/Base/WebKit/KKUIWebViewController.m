@@ -15,6 +15,14 @@
 
 @implementation KKUIWebViewController
 
+- (instancetype)initWithConfiguration:(WKWebViewConfiguration *)configuration {
+    self = [super init];
+    if (self) {
+        _externalConfiguration = configuration; // 保存外部传入的配置
+    }
+    return self;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
@@ -43,12 +51,18 @@
     }else {
         [self removeScriptMessageHandlerForName];
         [self.navigationController popViewControllerAnimated:YES];
+        
+        if (self.clickBackBlock != nil) {
+            
+            self.clickBackBlock();
+        }
     }
 }
 
 -(void)setRequestURL:(NSURL *)requestURL{
     _requestURL = requestURL;
     NSURLRequest *request = [NSURLRequest requestWithURL:requestURL];
+
     [self.webview loadRequest:request];
 }
 
@@ -129,8 +143,13 @@
 
 -(WKWebView *)webview{
     if (!_webview) {
-        WKWebViewConfiguration *configuration = [[WKWebViewConfiguration alloc] init];
-        [configuration setValue:@YES forKey:@"_allowUniversalAccessFromFileURLs"];
+        
+        WKWebViewConfiguration *configuration = self.externalConfiguration;
+        if (!configuration) {
+            configuration = [[WKWebViewConfiguration alloc] init];
+        }
+
+//        [configuration setValue:@YES forKey:@"_allowUniversalAccessFromFileURLs"];
         //设置URLSchemeHandler来处理特定URLScheme的请求，URLSchemeHandler需要实现WKURLSchemeHandler协议
         //本例中WKWebView将把URLScheme为customScheme的请求交由CustomURLSchemeHandler类的实例处理
         KKWKURLSchemeHandler *handler = [[KKWKURLSchemeHandler alloc] init];
@@ -174,6 +193,12 @@
     dispatch_async(dispatch_get_main_queue(), ^{
         //to do
     });
+}
+
+- (void)configureWithURL:(NSURL *)url title:(NSString *)title progressColor:(UIColor *)color {
+    self.requestURL = url;
+    self.title = title;
+    [self setProgressViewTintColor:color];
 }
 
 @end

@@ -151,6 +151,7 @@ public class ChindleTools {
         return attributedString
     }
     
+    //价格
     public static func formatMoneyStr(currency: String, amount: String, currencyFontSize: CGFloat, amountFontSize: CGFloat, currencyColor: UIColor, amountColor: UIColor) -> NSAttributedString {
         let attributedString = NSMutableAttributedString()
         
@@ -171,28 +172,25 @@ public class ChindleTools {
         return attributedString
     }
     
-    //生成二维码
-//    public static func generateQRCode(from string: String) -> UIImage? {
-//        let data = string.data(using: String.Encoding.ascii)
-//
-//        // 使用 CoreImage 框架创建 CIFilter 对象
-//        guard let filter = CIFilter(name: "CIQRCodeGenerator") else { return nil }
-//
-//        // 将数据设置为输入值
-//        filter.setValue(data, forKey: "inputMessage")
-//
-//        // 获取生成的二维码图像
-//        guard let outputImage = filter.outputImage else { return nil }
-//
-//        // 调整生成的图像尺寸
-//        let transform = CGAffineTransform(scaleX: 10, y: 10)
-//        let scaledImage = outputImage.transformed(by: transform)
-//
-//        // 创建 UIImage 对象
-//        let qrCodeImage = UIImage(ciImage: scaledImage)
-//
-//        return qrCodeImage
-//    }
+    public static func formatMoneyStr(currency: String, amount: String, currencyFont: UIFont, amountFont: UIFont, currencyColor: UIColor, amountColor: UIColor) -> NSAttributedString {
+        let attributedString = NSMutableAttributedString()
+        
+        let currencyAttributes: [NSAttributedString.Key: Any] = [
+            .font: currencyFont,
+            .foregroundColor: currencyColor
+        ]
+        let currencyAttributedString = NSAttributedString(string: currency, attributes: currencyAttributes)
+        attributedString.append(currencyAttributedString)
+        
+        let amountAttributes: [NSAttributedString.Key: Any] = [
+            .font: amountFont,
+            .foregroundColor: amountColor
+        ]
+        let amountAttributedString = NSAttributedString(string: amount, attributes: amountAttributes)
+        attributedString.append(amountAttributedString)
+        
+        return attributedString
+    }
     
     //生成二维码
     public static func generateQRCode(from url: URL) -> UIImage? {
@@ -261,8 +259,6 @@ public class ChindleTools {
             }
         }
 
-       
-
         return attributedString
     }
     
@@ -273,9 +269,44 @@ public class ChindleTools {
         return viewWidth
     }
     
+    //同一个View 大小改变时用
     public static func calculateViewHeight(forImageSize imageSize: CGSize, viewWidth: CGFloat) -> CGFloat {
         let aspectRatio = imageSize.height / imageSize.width
         let viewHeight = viewWidth * aspectRatio
         return viewHeight
     }
+    
+    //修改App图标
+    public static func setApplicationIconName(_ iconName: String?) {
+        if UIApplication.shared.responds(to: #selector(getter: UIApplication.supportsAlternateIcons)) && UIApplication.shared.supportsAlternateIcons {
+            typealias setAlternateIconName = @convention(c) (NSObject, Selector, NSString?, @escaping (NSError) -> ()) -> ()
+            
+            let selectorString = "_setAlternateIconName:completionHandler:"
+            
+            let selector = NSSelectorFromString(selectorString)
+            let imp = UIApplication.shared.method(for: selector)
+            let method = unsafeBitCast(imp, to: setAlternateIconName.self)
+            method(UIApplication.shared, selector, iconName as NSString?, { _ in })
+        }
+    }
+
+
 }
+
+
+extension ChindleTools {
+    
+    public static func compareTimestamps(timestamp1: TimeInterval, timestamp2: TimeInterval) -> ComparisonResult {
+        let date1 = Date(timeIntervalSince1970: timestamp1)
+        let date2 = Date(timeIntervalSince1970: timestamp2)
+        
+        return date1.compare(date2)
+    }
+    
+}
+
+public func isDeviceiPad() -> Bool {
+    return UIDevice.current.userInterfaceIdiom == .pad
+}
+
+

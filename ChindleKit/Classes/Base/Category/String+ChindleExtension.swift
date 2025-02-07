@@ -79,3 +79,44 @@ extension String {
         return NSRange(location: location, length: length)
     }
 }
+
+extension String {
+    public func size(withFont font: UIFont) -> CGSize {
+        let attributes = [NSAttributedString.Key.font: font]
+        return (self as NSString).size(withAttributes: attributes)
+    }
+    
+    //计算文字高度
+    public func heightForString(withFont font: UIFont, maxWidth: CGFloat) -> CGFloat {
+        let size = CGSize(width: maxWidth, height: .greatestFiniteMagnitude)
+        let options: NSStringDrawingOptions = [.usesLineFragmentOrigin, .usesFontLeading]
+        let attributes = [NSAttributedString.Key.font: font]
+        
+        let boundingRect = self.boundingRect(with: size, options: options, attributes: attributes, context: nil)
+        
+        return ceil(boundingRect.height)
+    }
+    
+    /// 判断文字是否超过两行
+    /// - Parameter width: UILabel 的宽度
+    /// - Returns: 是否超过两行
+    public func isTextOverTwoLines(width: CGFloat, font: UIFont) -> Bool {
+        
+        // 设置最大宽度和计算所需的尺寸
+        let maxSize = CGSize(width: width, height: CGFloat.greatestFiniteMagnitude)
+        let textHeight = (self as NSString).boundingRect(
+            with: maxSize,
+            options: .usesLineFragmentOrigin,
+            attributes: [.font: font],
+            context: nil
+        ).height
+        
+        // 计算单行文字的高度
+        let singleLineHeight = font.lineHeight
+        
+        // 如果所需高度大于单行高度的两倍，则说明是两行或更多
+        return textHeight > singleLineHeight * 2
+    }
+}
+
+
